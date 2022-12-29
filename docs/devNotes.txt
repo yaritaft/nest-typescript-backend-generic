@@ -1,0 +1,48 @@
+
+nicoferni: Te banco fuerte yari gracias por todo 
+:)
+ 
+:)
+AlejoAlbu: seguramente te falta colocar "?authSource=admin" al final del connection string, siempre y cuando tengas el las credenciales en admin
+Founder, 5-Month Subscribernicoferni: De nada! 
+:D
+Founder, 5-Month Subscribernicoferni: Que estas codeando?
+AlejoAlbu: mongodb://user:password@localhost:27017/nombreDeLaDb?authSource=admin
+AlejoAlbu: reemplaza user y password por las credenciales que son
+Founder, 5-Month Subscribernicoferni: jaajaajaa
+AlejoAlbu: entra al compass y copia, use admin;
+zzxc_: tal vez creando un user desde la terminal de mongo?
+tshmg: puedo ver como tenes tu codigo?
+AlejoAlbu: luego "db.createUser( { user: "admin", pwd: "admin123", roles: [ { role:"root",db:"admin"}, ] } );"
+AlejoAlbu: cambia user y password a lo que quieras
+zzxc_: Creo que esa seria la solucion
+AlejoAlbu: lee los comentarios xD
+zzxc_: https://stackoverflow.com/questions/38921414/mongodb-what-are-the-default-user-and-password
+Founder, 5-Month Subscribernicoferni: Estas con dos monitores?
+tshmg: no se ve el vscode 🥲
+Redeemed Highlight My Message
+100
+AlejoAlbu: lee mis comentarios 
+BibleThump
+tshmg: el "start:dev" sera?? ajaja
+AlejoAlbu: prueba con 127.0.0.1 usando el usuario que creaste
+zzxc_: Pero el user que creamos no es para la db admin ?
+zzxc_: en lugar de mentorship digo
+zzxc_: buenisimo jaja
+Replying to @zzxc_: Pero el user que creamos no es para la db admin ?
+
+AlejoAlbu: si pero es root, tiene acceso a todo
+AlejoAlbu: pot fin xD
+zzxc_: Yo por eso uso docker con todo
+AlejoAlbu: exacto, yo tambien uso docker, ya viene todo configuradito
+
+
+Lo que terminó funcionando fue desde compass ir al sh 
+
+use admin
+crear el usuario con root permissions y usuario y contraseña
+y poenr este connection string
+
+'mongodb://admin:admin123@127.0.0.1:27017/mentorship?authSource=admin',
+
+alternativa usar docker y usar los settings como estan en otros proyectos
