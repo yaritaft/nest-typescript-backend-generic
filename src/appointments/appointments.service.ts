@@ -1,34 +1,31 @@
 import { Injectable } from '@nestjs/common';
-import { InjectModel } from '@nestjs/mongoose';
-import { Model } from 'mongoose';
-import { Appointments, AppointmentsDocument } from './appointments.schema';
+import { v4 } from 'uuid';
+import { Appointments } from './appointments.schema';
+import { CreateAppointment } from './dtos/create-appointment.dto';
+import { AppointmentsRepository } from './appointments.repository';
+import { UpdateAppointment } from './dtos/update-appointment.dto';
 
 @Injectable()
 export class AppointmentsService {
-  constructor(
-    @InjectModel(Appointments.name)
-    private appointmentsModel: Model<AppointmentsDocument>,
-  ) {}
-  getHello(): string {
-    return 'Hello World! 3';
-  }
+  constructor(private appointmentsRepository: AppointmentsRepository) {}
 
   async getAppointments(): Promise<Appointments[]> {
-    const appointments = await this.appointmentsModel.find<Appointments>({});
-    return appointments;
+    return this.appointmentsRepository.getAppointments();
   }
 
-  async postAppointments(): Promise<Appointments[]> {
-    const newAppointment = new this.appointmentsModel({
-      subject: 123,
-      fromDatetime: new Date().valueOf(),
-      toDatetime: new Date().valueOf() - 1,
-      mailAttendant: 'aaa@gmail.com',
-      appointmentId: 'aaaqq',
-      cellphoneNumberAttendant: 'aaa',
-    });
-    await newAppointment.save();
+  updateAppointment(request: UpdateAppointment) {
+    return this.appointmentsRepository.updateAppointment(request);
+  }
 
-    return this.getAppointments();
+  async createAppointments(
+    request: CreateAppointment,
+  ): Promise<Appointments[]> {
+    const appointmentId = v4();
+    await this.appointmentsRepository.createAppointment({
+      ...request,
+      appointmentId,
+    });
+
+    return this.appointmentsRepository.getAppointments();
   }
 }
